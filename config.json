@@ -1,0 +1,49 @@
+{
+    "switches": [
+        {
+            "name": "Svetlo 1",
+            "pin": 7,
+            "state": false
+        },
+        {
+            "name": "Svetlo 2",
+            "pin": 6,
+            "state": true
+        },
+        {
+            "name": "Svetlo Bedroom",
+            "pin": 3,
+            "state": true
+        },
+        {
+            "name": "Kitchen",
+            "pin": 13,
+            "state": false
+        },
+        {
+            "name": "Bathroom",
+            "pin": 4,
+            "state": true
+        },
+        {
+            "name": "Garage",
+            "pin": 1,
+            "state": true
+        },
+        {
+            "name": "Hall",
+            "pin": 21,
+            "state": false
+        },
+        {
+            "name": "Warehouse",
+            "pin": 18,
+            "state": true
+        }
+    ],
+    "settings": [
+        {
+            "pin": "1234"
+        }
+    ]
+}
