@@ -1,8 +1,10 @@
 from flask import Flask
 from flask import request, jsonify
 import json
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 key = "openhomepanel123"
 
@@ -74,7 +76,7 @@ def get_switches():
 @app.route('/get_temp', methods=['GET'])
 def get_temp():
     if(request.headers.get("api_key")==key):
-        return "23 °C"
+        return "23 °C", 200
     else:
         return 'bad request!', 400
 
