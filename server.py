@@ -27,7 +27,7 @@ def get_pin():
     if(request.headers.get("api_key")==key):
         with open('config.json') as json_file:
             data = json.load(json_file)
-        return jsonify(data["settings"][0]["pin"])
+        return jsonify(data["settings"][0]["pin"]), 200
     else:
         return 'bad request!', 400
 
@@ -69,7 +69,7 @@ def get_switches():
     if(request.headers.get("api_key")==key):
         with open('config.json') as json_file:
             data = json.load(json_file)
-        return jsonify(data["switches"])
+        return jsonify(data["switches"]), 200
     else:
         return 'bad request!', 400
 
