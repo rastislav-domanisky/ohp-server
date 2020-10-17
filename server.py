@@ -80,6 +80,15 @@ def get_temp():
     else:
         return 'bad request!', 400
 
+@app.route('/get_APIkey', methods=['GET'])
+def get_APIkey():
+    if(request.headers.get("api_key")==key):
+        with open('config.json') as json_file:
+            data = json.load(json_file)
+        return jsonify(data["settings"][0]["API-key"]), 200
+    else:
+        return 'bad request!', 400
+
 
 # Start server -----------------------------
 if __name__ == '__main__':

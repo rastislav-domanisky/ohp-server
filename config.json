@@ -43,7 +43,8 @@
     ],
     "settings": [
         {
-            "pin": "1234"
+            "pin": "1234",
+            "API-key": "b443bc989ffa04f9348d1d5c1f38e271"
         }
     ]
 }
