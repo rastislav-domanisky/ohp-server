@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
+
 from flask import Flask
 from flask import request, jsonify
 import json
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 key = "openhomepanel123"
 
@@ -47,16 +49,12 @@ def change_pin():
 
 @app.route('/switch', methods=['POST'])
 def switch():
-    if(request.headers.get("api_key")==key):
+    if(json.loads(request.data.decode('UTF-8'))['headers']['api_key']==key):
+        sw_id = json.loads(request.data.decode('UTF-8'))['body']['id']
+        sw_state = json.loads(request.data.decode('UTF-8'))['body']['state']
         with open('config.json') as json_file:
             data = json.load(json_file)
-        swID = int(request.args["id"])
-        if(request.args["state"] == "true"):
-            swState = True
-        else:
-            swState = False
-        
-        data["switches"][swID]["state"] = swState
+        data['switches'][sw_id]['state'] = sw_state
         with open('config.json', 'w') as outfile:
             json.dump(data, outfile)
         return 'OK', 200
