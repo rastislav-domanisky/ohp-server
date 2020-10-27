@@ -4,11 +4,23 @@ from flask import Flask
 from flask import request, jsonify
 import json
 from flask_cors import CORS
+import pymongo
+
+key = "openhomepanel123"
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-key = "openhomepanel123"
+# Config -------------------------------
+
+OHP_PORT = 3000 # port for server
+OHP_DEBUG = True # use debug only in developement
+OHP_HOST = "0.0.0.0" # use "0.0.0.0" for LAN access, or "127.0.0.1" for localhost
+OHP_KEY = "openhomepanel123" # secret API KEY for HTTP
+OWM_KEY = "b443bc989ffa04f9348d1d5c1f38e271" # your Open Weather Map API KEY
+
+# --------------------------------------
+
 
 # Setup -------------------------------
 
@@ -20,74 +32,104 @@ key = "openhomepanel123"
 
 # API ---------------------------------
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def hello():
-    return "Hello World!"
-
-@app.route('/get_pin', methods=['GET'])
-def get_pin():
-    if(request.headers.get("api_key")==key):
-        with open('config.json') as json_file:
-            data = json.load(json_file)
-        return jsonify(data["settings"][0]["pin"]), 200
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        return "HELLO", 200
     else:
-        return 'bad request!', 400
+        return "UNAUTHORIZED", 401 
+   
 
-
-@app.route('/change_pin', methods=['POST'])
-def change_pin():
-    if(request.headers.get("api_key")==key):
-        with open('config.json') as json_file:
-            data = json.load(json_file)
-        data["settings"][0]["pin"] = request.args["pin"]
-        with open('config.json', 'w') as outfile:
-            json.dump(data, outfile)
-        return 'OK', 200
-    else:
-        return 'bad request!', 400
-
-
-@app.route('/switch', methods=['POST'])
-def switch():
-    if(json.loads(request.data.decode('UTF-8'))['headers']['api_key']==key):
-        sw_id = json.loads(request.data.decode('UTF-8'))['body']['id']
-        sw_state = json.loads(request.data.decode('UTF-8'))['body']['state']
-        with open('config.json') as json_file:
-            data = json.load(json_file)
-        data['switches'][sw_id]['state'] = sw_state
-        with open('config.json', 'w') as outfile:
-            json.dump(data, outfile)
-        return 'OK', 200
-    else:
-        return 'bad request!', 400
-
-
+# Get all switches as json
 @app.route('/get_switches', methods=['GET'])
 def get_switches():
-    if(request.headers.get("api_key")==key):
-        with open('config.json') as json_file:
-            data = json.load(json_file)
-        return jsonify(data["switches"]), 200
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        try:
+            with open('config.json') as json_file:
+                data = json.load(json_file)
+            return jsonify(data["switches"]), 200
+        except:
+            return "ERROR", 400
     else:
-        return 'bad request!', 400
+        return "UNAUTHORIZED", 401
 
+# Create new switch
+@app.route('/add_switch', methods=['POST'])
+def add_switch():
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        try:
+            with open('config.json') as json_file:
+                data = json.load(json_file)
+                data["switches"].append({
+                    'name': request.args.get('name'),
+                    'pin': int(request.args.get('pin')),
+                    'state': False
+                })
+            with open("config.json", "w", encoding="utf-8") as f:
+                json.dump(data, f)
+            return "OK", 200
+        except:
+            return "ERROR", 400
+    else:
+        return "UNAUTHORIZED", 401
+
+# Delete switch
+@app.route('/delete_switch', methods=['POST'])
+def delete_switch():
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        try:
+            with open('config.json') as json_file:
+                data = json.load(json_file)
+                if len(data['switches']) >= int(request.args.get('index')):
+                    data["switches"].pop(int(request.args.get('index')))
+                else:    
+                    return "ERROR - Index Out of Range", 400
+            with open("config.json", "w", encoding="utf-8") as f:
+                json.dump(data, f)
+            return "OK", 200
+        except:
+            return "ERROR", 400
+    else:
+        return "UNAUTHORIZED", 401
+
+# Change switch state
+@app.route('/switch', methods=['POST'])
+def switch():
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        try:
+            with open('config.json') as json_file:
+                data = json.load(json_file)
+                if(request.args.get('state') == "true"):
+                    data["switches"][int(request.args.get('index'))]['state'] = True
+                elif(request.args.get('state') == "false"):
+                    data["switches"][int(request.args.get('index'))]['state'] = False
+                else:
+                    return "ERROR - state is not boolean"
+            with open("config.json", "w", encoding="utf-8") as f:
+                json.dump(data, f)
+            return "OK", 200
+        except:
+            return "ERROR", 400
+    else:
+        return "UNAUTHORIZED", 401
+
+# Get current temperature from GPIO sensor
 @app.route('/get_temp', methods=['GET'])
 def get_temp():
-    if(request.headers.get("api_key")==key):
+    if(request.headers.get('API-KEY') == OHP_KEY):
         return "23 °C", 200
     else:
-        return 'bad request!', 400
+        return "UNAUTHORIZED", 401
 
-@app.route('/get_APIkey', methods=['GET'])
+# Get Open Weather Map API key
+@app.route('/get_OWM_key', methods=['GET'])
 def get_APIkey():
-    if(request.headers.get("api_key")==key):
-        with open('config.json') as json_file:
-            data = json.load(json_file)
-        return jsonify(data["settings"][0]["API-key"]), 200
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        return OWM_KEY, 200
     else:
-        return 'bad request!', 400
+        return "UNAUTHORIZED", 401
 
 
 # Start server -----------------------------
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, port=3000)
+    app.run(host=OHP_HOST, debug=OHP_DEBUG, port=OHP_PORT)

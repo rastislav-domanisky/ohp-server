@@ -3,7 +3,7 @@
         {
             "name": "Svetlo 1",
             "pin": 7,
-            "state": true
+            "state": false
         },
         {
             "name": "Svetlo 2",
@@ -18,7 +18,7 @@
         {
             "name": "Kitchen",
             "pin": 13,
-            "state": true
+            "state": false
         },
         {
             "name": "Bathroom",
@@ -43,8 +43,7 @@
     ],
     "settings": [
         {
-            "pin": "1234",
-            "API-key": "b443bc989ffa04f9348d1d5c1f38e271"
+            "pin": "1234"
         }
     ]
 }
