@@ -4,9 +4,6 @@ from flask import Flask
 from flask import request, jsonify
 import json
 from flask_cors import CORS
-import pymongo
-
-key = "openhomepanel123"
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
