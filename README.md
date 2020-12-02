@@ -61,4 +61,14 @@ https://openweathermap.org/
 OWM-api-key: "my OWM API key"
 ```
 
+## Run server
+Add permission
+```bash
+chmod +x server.py
+```
+Run server
+```json
+./server.py
+```
+
 ###### Do not edit something else...
