@@ -49,11 +49,6 @@ OHP_KEY = "openhomepanel123" # secret API KEY for HTTP (do not change)
 W_SSID = data["wi-fi"]["SSID"]
 W_PASWD = data["wi-fi"]["password"]
 
-try:
-    wireless.connect(ssid=W_SSID, password=W_PASWD)
-except:
-    print("Cannot connect to Wi-Fi")
-
 
 #TODO: init switch state to false !!!
 
@@ -248,6 +243,11 @@ def get_wifi():
             return "ERROR", 400
     else:
         return "UNAUTHORIZED", 401
+
+#try:
+#    wireless.connect(ssid=W_SSID, password=W_PASWD)
+#except:
+#    print("Cannot connect to Wi-Fi")
 
 
 # Start server -----------------------------
