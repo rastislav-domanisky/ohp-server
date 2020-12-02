@@ -253,11 +253,17 @@ def get_wifi():
     else:
         return "UNAUTHORIZED", 401
 
-#try:
-#    wireless.connect(ssid=W_SSID, password=W_PASWD)
-#except:
-#    print("Cannot connect to Wi-Fi")
-
+# Get PIN
+@app.route('/get_pin', methods=['GET'])
+def get_pin():
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        try:
+            data = loadData()
+            return data["server"]["pin"]
+        except:
+            return "ERROR", 400
+    else:
+        return "UNAUTHORIZED", 401
 
 # Start server -----------------------------
 if __name__ == '__main__':
