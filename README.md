@@ -1,29 +1,66 @@
-### OHP Server
+# OHP Server
 
+Server for Open Home Panel
+
+// link to OHP
+
+## Dependencies
+
+* Raspberry Pi OS (Raspbian)
+* Internet connection - // link to manual
+
+## Installation
+
+Update system
+```bash
 sudo apt-get update
 sudo apt-get upgrade
-
+```
+Install Python3 and pip3
+```bash
 sudo apt-get install python3 python3-pip
-
+```
+Install python dependiencies
+```bash
 sudo apt-get install python3-w1thermsensor
 sudo apt-get install python3-alsaaudio
-
-clone this repo 
+```
+Download server
+```bash
+git clone https://github.com/rastislav-domanisky/ohp-server.git
+```
+Change directory to server root folder
+```bash
 cd ohp-server
-
+```
+Install other python requirements
+```bash
 pip3 install -r requirements.txt
+```
 
-CONFIG:
+## Configuration
 
-host: "0.0.0.0" for LAN or "localhost"
+Open config.json file
+```bash
+nano config.json
+```
+Server host
+```json
+host: "0.0.0.0" or "localhost"
+```
+Change lock-screen PIN
+```json
+pin: "1234"
+```
+Setup Wi-Fi connection
+```json
+SSID: "My Wifi Name"
+password: "wifi password"
+```
+Setup Open Weather Map
+https://openweathermap.org/
+```json
+OWM-api-key: "my OWM API key"
+```
 
-OWM-api-key: Open Weather Map API key https://openweathermap.org/
-
-security pin for screen ... default is "1234"
-
-Wi-Fi:
-
-SSID: "My Wifi"
-"password": "My Wifi Password"
-
-do not change something else
+###### Do not edit something else...
