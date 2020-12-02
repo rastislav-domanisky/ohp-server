@@ -3,17 +3,17 @@
         "port": 3000,
         "host": "0.0.0.0",
         "debug": true,
-        "OWM-api-key": "b443bc989ffa04f9348d1d5c1f38e271",
+        "OWM-api-key": "",
         "pin": "1234"
     },
     "wi-fi": {
         "enabled": true, 
-        "SSID": "domanisky2",
-        "password": "RastiK2000123"
+        "SSID": "My Wifi",
+        "password": "My Wifi Password"
     },
     "settings": {
         "OWM": {
-            "city": "Zlate Moravce",
+            "city": "London",
             "units": "metric"
         },
         "temp-sensor": {
@@ -21,45 +21,7 @@
         }
     },
     "switches": [
-        {
-            "name": "Svetlo 1",
-            "pin": 7,
-            "state": true
-        },
-        {
-            "name": "Svetlo 2",
-            "pin": 6,
-            "state": true
-        },
-        {
-            "name": "Svetlo Bedroom",
-            "pin": 3,
-            "state": false
-        },
-        {
-            "name": "Kitchen",
-            "pin": 13,
-            "state": false
-        },
-        {
-            "name": "Bathroom",
-            "pin": 4,
-            "state": true
-        },
-        {
-            "name": "Garage",
-            "pin": 1,
-            "state": true
-        },
-        {
-            "name": "Hall",
-            "pin": 21,
-            "state": true
-        },
-        {
-            "name": "Warehouse",
-            "pin": 18,
-            "state": true
-        }
-    ]
+        
+    ],
+    "pins": [8, 10, 11, 12, 13, 15, 16, 18, 22, 36]
 }
