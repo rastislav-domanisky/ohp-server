@@ -259,7 +259,7 @@ def get_pin():
     if(request.headers.get('API-KEY') == OHP_KEY):
         try:
             data = loadData()
-            return data["server"]["pin"]
+            return str(data["server"]["pin"])
         except:
             return "ERROR", 400
     else:
