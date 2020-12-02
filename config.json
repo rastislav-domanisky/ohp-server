@@ -1,9 +1,30 @@
 {
+    "server": {
+        "port": 3000,
+        "host": "0.0.0.0",
+        "debug": true,
+        "OWM-api-key": "b443bc989ffa04f9348d1d5c1f38e271",
+        "pin": "1234"
+    },
+    "wi-fi": {
+        "enabled": true, 
+        "SSID": "domanisky2",
+        "password": "RastiK2000123"
+    },
+    "settings": {
+        "OWM": {
+            "city": "Zlate Moravce",
+            "units": "metric"
+        },
+        "temp-sensor": {
+            "units": "metric"
+        }
+    },
     "switches": [
         {
             "name": "Svetlo 1",
             "pin": 7,
-            "state": false
+            "state": true
         },
         {
             "name": "Svetlo 2",
@@ -39,11 +60,6 @@
             "name": "Warehouse",
             "pin": 18,
             "state": true
-        }
-    ],
-    "settings": [
-        {
-            "pin": "1234"
         }
     ]
 }
