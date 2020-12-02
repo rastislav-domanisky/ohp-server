@@ -2,12 +2,10 @@
 
 Server for Open Home Panel
 
-// link to OHP
-
 ## Dependencies
 
 * Raspberry Pi OS (Raspbian)
-* Internet connection - // link to manual
+* Internet connection
 
 ## Installation
 
