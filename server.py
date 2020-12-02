@@ -77,6 +77,15 @@ def get_switches():
     else:
         return "UNAUTHORIZED", 401
 
+# Get available pins
+@app.route('/get_pins', methods=['GET'])
+def get_pins():
+    if(request.headers.get('API-KEY') == OHP_KEY):
+        data = loadData()
+        return data["pins"]
+    else:
+        return "UNAUTHORIZED", 401
+
 # Create new switch
 @app.route('/add_switch', methods=['POST'])
 def add_switch():
@@ -132,9 +141,9 @@ def get_temp():
         data = loadData()
         try:
             if(data["settings"]["temp-sensor"]["units"] == "metric"):
-                return str(tempSensor.get_temperature(W1ThermSensor.DEGREES_C)) + " °C", 200
+                return str(round(tempSensor.get_temperature(W1ThermSensor.DEGREES_C), 1)) + " °C", 200
             else:
-                return str(tempSensor.get_temperature(W1ThermSensor.DEGREES_F)) + " °F", 200
+                return str(round(tempSensor.get_temperature(W1ThermSensor.DEGREES_F), 1)) + " °F", 200
         except:
             return "Cannot get temp", 400
     else:
