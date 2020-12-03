@@ -82,7 +82,7 @@ def get_switches():
 def get_pins():
     if(request.headers.get('API-KEY') == OHP_KEY):
         data = loadData()
-        return data["pins"]
+        return jsonify(data["pins"])
     else:
         return "UNAUTHORIZED", 401
 
