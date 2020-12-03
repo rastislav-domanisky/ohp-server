@@ -1,6 +1,6 @@
 # OHP Server
 
-Server for Open Home Panel
+Server for [Open Home Panel](https://github.com/rastislav-domanisky/Open-Home-Panel)
 
 ## Dependencies
 
