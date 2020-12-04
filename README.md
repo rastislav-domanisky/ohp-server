@@ -4,7 +4,7 @@ Server for [Open Home Panel](https://github.com/rastislav-domanisky/Open-Home-Pa
 
 ## Dependencies
 
-* Raspberry Pi OS (Raspbian)
+* Raspberry Pi OS (Lite)
 * Internet connection
 
 ## Installation
