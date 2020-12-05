@@ -14,6 +14,13 @@ except:
     print("Cannot load w1thermsensor")
 
 try:
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setwarnings(False)
+except:
+    print("Cannot load RPi.GPIO")
+
+try:
     from wireless import Wireless
     wireless = Wireless()
 except:
@@ -26,7 +33,6 @@ except:
     print("Cannot load alsaaudio")
 
 app = Flask(__name__)
-#app.config['JSON_AS_ASCII'] = False
 CORS(app, supports_credentials=True)
 
 # Setup -------------------------------
@@ -49,13 +55,22 @@ OHP_KEY = "openhomepanel123" # secret API KEY for HTTP (do not change)
 W_SSID = data["wi-fi"]["SSID"]
 W_PASWD = data["wi-fi"]["password"]
 
+for currentPin in loadData()["pins"]:
+    try:
+        GPIO.setup(currentPin, GPIO.OUT)
+    except:
+        print("Cannot setup pins")
 
-#TODO: init switch state to false !!!
-
-#with open('config.json') as json_file:
-#    data = json.load(json_file)
-#    print("Config loaded")
-
+for currentSwitch in loadData()["switches"]:
+    try:
+        if(currentSwitch["state"]):
+            GPIO.output(currentSwitch["pin"], GPIO.HIGH)
+            print("HIGH")
+        else:
+            GPIO.output(currentSwitch["pin"], GPIO.LOW)
+            print("LOW")
+    except:
+        print("Cannot init pins")
 
 
 # API ---------------------------------
@@ -122,10 +137,18 @@ def delete_switch():
 def switch():
     if(request.headers.get('API-KEY') == OHP_KEY):
         data = loadData()
-        if(request.args.get('state') == "true"):
-            data["switches"][int(request.args.get('index'))]['state'] = True
+        if(request.args.get('state') == "true"):   
+            try:
+                GPIO.output(data["switches"][int(request.args.get('index'))]['pin'], GPIO.HIGH)
+                data["switches"][int(request.args.get('index'))]['state'] = True
+            except:
+                print("Cannot SWITCH GPIO PIN")
         elif(request.args.get('state') == "false"):
-            data["switches"][int(request.args.get('index'))]['state'] = False
+            try:
+                GPIO.output(data["switches"][int(request.args.get('index'))]['pin'], GPIO.LOW)
+                data["switches"][int(request.args.get('index'))]['state'] = False
+            except:
+                print("Cannot SWITCH GPIO PIN")
         else:
             return "ERROR - state is not boolean", 400
         with open("config.json", "w", encoding="utf-8") as f:

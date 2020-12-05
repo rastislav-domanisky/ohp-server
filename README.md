@@ -22,6 +22,7 @@ Install python dependiencies
 ```bash
 sudo apt-get install python3-w1thermsensor
 sudo apt-get install python3-alsaaudio
+sudo apt-get install python3-rpi.gpio
 ```
 Download server
 ```bash

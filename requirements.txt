@@ -4,3 +4,4 @@ w1thermsensor
 pyalsaaudio
 packaging
 wireless
+RPi.GPIO
