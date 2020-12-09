@@ -7,6 +7,11 @@ Server for [Open Home Panel](https://github.com/rastislav-domanisky/Open-Home-Pa
 * Raspberry Pi OS (Lite)
 * Internet connection
 
+## Client 
+
+* [OHP-Controller](https://github.com/rastislav-domanisky/OHP-Controller)
+* [Open Home Panel](https://github.com/rastislav-domanisky/Open-Home-Panel)
+
 ## Installation
 
 Update system
