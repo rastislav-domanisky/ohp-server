@@ -294,7 +294,8 @@ def ifttt():
     key = json.loads(request.data)["key"]
     st = json.loads(request.data)["state"]
     if(key == OHP_KEY):
-        if(st == "on"):  
+        if(st == "on"):
+            print(str(st))
             try:
                 data = loadData()
                 GPIO.output(data["switches"][0]['pin'], GPIO.HIGH)
