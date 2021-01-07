@@ -290,7 +290,7 @@ def get_pin():
 
 # IFTTT
 @app.route('/ifttt', methods=['POST'])
-def switch():
+def ifttt():
     print("IFTTT: " + str(request.data))
 
 # Start server -----------------------------
