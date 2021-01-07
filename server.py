@@ -291,8 +291,30 @@ def get_pin():
 # IFTTT
 @app.route('/ifttt', methods=['POST'])
 def ifttt():
-    print("IFTTT: " + str(request.data))
-    return "YES SIR", 200
+    key = json.loads(request.data)["key"]
+    st = json.loads(request.data)["state"]
+    if(key == OHP_KEY):
+        if(st == "on"):  
+            try:
+                data = loadData()
+                GPIO.output(data["switches"][0]['pin'], GPIO.HIGH)
+                data["switches"][0]['state'] = True
+            except:
+                print("Cannot SWITCH GPIO PIN")
+        elif(st == "false"):
+            try:
+                data = loadData()
+                GPIO.output(data["switches"][0]['pin'], GPIO.LOW)
+                data["switches"][0]['state'] = False
+            except:
+                print("Cannot SWITCH GPIO PIN")
+        else:
+            return "ERROR - state is not boolean", 400
+        with open("config.json", "w", encoding="utf-8") as f:
+            json.dump(data, f)
+        return "OK", 200
+    else:
+        return "UNAUTHORIZED", 401
 
 # Start server -----------------------------
 if __name__ == '__main__':
