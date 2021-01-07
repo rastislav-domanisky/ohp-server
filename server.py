@@ -301,7 +301,7 @@ def ifttt():
                 data["switches"][0]['state'] = True
             except:
                 print("Cannot SWITCH GPIO PIN")
-        elif(st == "false"):
+        elif(st == "off"):
             try:
                 data = loadData()
                 GPIO.output(data["switches"][0]['pin'], GPIO.LOW)
