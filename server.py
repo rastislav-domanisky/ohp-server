@@ -288,6 +288,11 @@ def get_pin():
     else:
         return "UNAUTHORIZED", 401
 
+# IFTTT
+@app.route('/ifttt', methods=['POST'])
+def switch():
+    print("IFTTT: " + str(request.data))
+
 # Start server -----------------------------
 if __name__ == '__main__':
     app.run(host=OHP_HOST, debug=OHP_DEBUG, port=OHP_PORT)
