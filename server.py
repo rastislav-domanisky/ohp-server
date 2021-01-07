@@ -292,6 +292,7 @@ def get_pin():
 @app.route('/ifttt', methods=['POST'])
 def ifttt():
     print("IFTTT: " + str(request.data))
+    return "YES SIR", 200
 
 # Start server -----------------------------
 if __name__ == '__main__':
